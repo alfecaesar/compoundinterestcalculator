@@ -1,6 +1,10 @@
 // Formula https://www.thecalculatorsite.com/articles/finance/compound-interest-formula.php
 // https://images.slideplayer.com/25/8004672/slides/slide_5.jpg
 // https://developers.google.com/chart/interactive/docs/gallery/columnchart
+// https://financialmentor.com/calculator/compound-interest-calculator
+// same result // https://www.calculators.org/savings/compounding-frequency.php#todaysrates
+
+var chartData = new Array;
 
 $(document).ready(function(){
 
@@ -44,7 +48,7 @@ function calcFunction(theForm){
     
     if(compounding === 0){
         var cc_1 = (r * yearInWhole);
-        var cc_2 = Math.pow(2.7183, cc_1);
+        var cc_2 = Math.pow(2.718281828, cc_1);
         var cc_3 = (startingAmount * cc_2);
         bb = cc_3;
 
@@ -90,14 +94,43 @@ function createTable(a,b,c,d){
 
     var tdHtml = '<tr><th>Year</th><th>Deposit</th><th>Interest</th><th>Balance</th></tr>'+
                  '<tr><td>Begin</td><td>' + currencyFormat(a) + '</td><td>0</td><td>' + currencyFormat(a) + '</td></tr>';
+
+    chartData.push(['Year', 'Balance']);
+    chartData.push(['Year 0', currencyFormat(a)]);
+
     var cc = (c/100);
     var aa_i = a;
     for(var i = 0; i <= (b-1); i++){
         var cc_i = (cc * aa_i);
         aa_i = (aa_i + cc_i);
         tdHtml += '<tr><td>' + (i+1) + '</td><td>0</td><td>' + currencyFormat(cc_i) + '</td><td>' + currencyFormat(aa_i) + '</td></tr>';
+
+        chartData.push(['Year '+(i+1), currencyFormat(aa_i)]);
     }
     tdHtml += '<tr><th>Total</th><th>' + currencyFormat(a) + '</th><th>' + currencyFormat(d) + '</th><th>' + currencyFormat(aa_i) + '</th></tr>';
     
     $(tdHtml).appendTo('.report-table table tbody');
+
+    google.charts.load('current', {'packages':['bar']});
+    google.charts.setOnLoadCallback(drawChart);
 }
+
+function drawChart() {
+    var data = google.visualization.arrayToDataTable(chartData);
+
+    var options = {
+      chart: {
+        title: '',
+        subtitle: '',
+      },
+      bars: 'vertical',
+      vAxis: {format: 'decimal'},
+      height: 700,
+      colors: ['#1b9e77', '#d95f02']
+    };
+
+    var chart = new google.charts.Bar(document.getElementById('chart_div'));
+
+    chart.draw(data, google.charts.Bar.convertOptions(options));
+
+  }
