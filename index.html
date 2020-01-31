@@ -5,8 +5,8 @@
   <meta charset="utf-8">
 
   <title>Compound Interest Calculator</title>
-  <meta name="description" content="The HTML5 Herald">
-  <meta name="author" content="SitePoint">
+  <meta name="description" content="Compound Interest Calculator>
+  <meta name="author" content="Alfe Caesar Lagas">
   <link rel="stylesheet" href="assets/css/display-structure.css">
   <link rel="stylesheet" href="assets/css/mai-theme.min.css">
   <link rel="stylesheet" href="assets/css/style.css">
@@ -24,7 +24,7 @@
                                 <div class="nf-form-cont">
                                     <div class="nf-form-wrap ninja-forms-form-wrap">
                                         <div class="nf-form-layout">
-                                            <form>
+                                            <form name="compoundCalculator" id="compoundinterest" class="financial-calculators calculator">
                                                 <div class="nf-form-content">
                                                     <div class="nf-mp-body">
 
@@ -37,7 +37,7 @@
                                                                         </label>
                                                                     </div>
                                                                     <div class="nf-field-element">
-                                                                        <input type="text" name="field_1" placeholder="$1,000" class="ninja-forms-field nf-element">
+                                                                        <input  autocomplete="off" type="text" id="edPV" inputmode="decimal" name="field_1" placeholder="$1,000" class="ninja-forms-field nf-element">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -52,7 +52,7 @@
                                                                         </label>
                                                                     </div>
                                                                     <div class="nf-field-element">
-                                                                        <input type="text" name="field_2" placeholder="10.0000%" class="ninja-forms-field nf-element">
+                                                                        <input autocomplete="off" type="text" id="edRate" inputmode="decimal" name="field_2" placeholder="10.0000%" class="ninja-forms-field nf-element">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -67,7 +67,7 @@
                                                                         </label>
                                                                     </div>
                                                                     <div class="nf-field-element">
-                                                                        <input type="text" name="field_3" placeholder="365" class="ninja-forms-field nf-element">
+                                                                        <input autocomplete="off" type="text" id="edNumDays" inputmode="decimal" name="field_3" placeholder="365" onblur="addEndDate(this.value)" class="ninja-forms-field nf-element">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -82,7 +82,7 @@
                                                                         </label>
                                                                     </div>
                                                                     <div class="nf-field-element">
-                                                                        <input type="text" name="field_4" placeholder="01/29/2020" class="ninja-forms-field nf-element">
+                                                                        <input type="text" id="edDate1" inputmode="decimal" name="field_4" placeholder="01/29/2020" class="ninja-forms-field nf-element">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -97,7 +97,7 @@
                                                                         </label>
                                                                     </div>
                                                                     <div class="nf-field-element">
-                                                                        <input type="text" name="field_5" placeholder="01/29/2020" class="ninja-forms-field nf-element">
+                                                                        <input type="text" id="edDate2" inputmode="decimal" name="field_5" placeholder="01/29/2020" class="ninja-forms-field nf-element">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -112,20 +112,23 @@
                                                                         </label>
                                                                     </div>
                                                                     <div class="nf-field-element">
-                                                                        <select name="field_6" class="ninja-forms-field nf-element">
+                                                                        <select id="selCmpFreq" name="field_6" class="ninja-forms-field nf-element">
+                                                                            
                                                                                 <option value="0">Continuous</option>
-                                                                                <option value="1">Daily</option>
-                                                                                <option value="2">Weekly</option>
-                                                                                <option value="3">BiWeekly</option>
-                                                                                <option value="4">Twice Monthly</option>
-                                                                                <option value="5">Every 4 Weeks</option>
-                                                                                <option value="6" selected="selected">Monthly</option>
-                                                                                <option value="7">BiMonthly</option>
-                                                                                <option value="8">Quarterly</option>
-                                                                                <option value="9">Every 4 Months</option>
-                                                                                <option value="10">Semiannually</option>
-                                                                                <option value="11">Annually</option>
-                                                                                <option value="12">Exact/Simple</option>
+                                                                                <option value="365">Daily</option>
+                                                                                <option value="52">Weekly</option>
+                                                                                <option value="26">BiWeekly</option>
+                                                                                <option value="24">Twice Monthly</option>
+                                                                                <option value="13">Every 4 Weeks</option>
+                                                                                <option value="12" selected="selected">Monthly</option>
+                                                                                <option value="6">BiMonthly</option>
+                                                                                <option value="4">Quarterly</option>
+                                                                                <option value="3">Every 4 Months</option>
+                                                                                <option value="2">Semiannually</option>
+                                                                                <option value="1">Annually</option>
+                                                                                <option value="1">Exact/Simple</option>
+                                                                            
+                                                                            
                                                                             </select>
                                                                     </div>
                                                                 </div>
@@ -141,11 +144,11 @@
                                                                         </label>
                                                                     </div>
                                                                     <div class="nf-field-element">
-                                                                        <select name="field_7" class="ninja-forms-field nf-element">
-                                                                                <option value="0">360</option>
-                                                                                <option value="1">364</option>
-                                                                                <option value="2" selected="selected">365</option>
-                                                                                <option value="3">366</option>
+                                                                        <select id="selDIY" name="field_7" class="ninja-forms-field nf-element">
+                                                                                <option value="360">360</option>
+                                                                                <option value="364">364</option>
+                                                                                <option value="365" selected="selected">365</option>
+                                                                                <option value="366">366</option>
                                                                             </select>
                                                                     </div>
                                                                 </div>
@@ -163,7 +166,7 @@
                                                                         </label>
                                                                     </div>
                                                                     <div class="nf-field-element">
-                                                                        <input disabled type="text" name="field_8" placeholder="$0.00" class="ninja-forms-field nf-element">
+                                                                        <input autocomplete="off" id="edInterest" inputmode="decimal" disabled type="text" name="field_8" placeholder="$0.00" class="ninja-forms-field nf-element">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -178,7 +181,7 @@
                                                                         </label>
                                                                     </div>
                                                                     <div class="nf-field-element">
-                                                                        <input disabled type="text" name="field_9" placeholder="$0.00" class="ninja-forms-field nf-element">
+                                                                        <input autocomplete="off" id="edFV" inputmode="decimal" disabled type="text" name="field_9" placeholder="$0.00" class="ninja-forms-field nf-element">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -193,7 +196,7 @@
                                                                         </label>
                                                                     </div>
                                                                     <div class="nf-field-element">
-                                                                        <input disabled type="text" name="field_10" placeholder="0.0000%" class="ninja-forms-field nf-element">
+                                                                        <input autocomplete="off" id="edAPY" inputmode="decimal" disabled type="text" name="field_10" placeholder="0.0000%" class="ninja-forms-field nf-element">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -208,7 +211,7 @@
                                                                         </label>
                                                                     </div>
                                                                     <div class="nf-field-element">
-                                                                        <input disabled type="text" name="field_11" placeholder="0.0000%" class="ninja-forms-field nf-element">
+                                                                        <input autocomplete="off" id="edDailyRate" inputmode="decimal" disabled type="text" name="field_11" placeholder="0.0000%" class="ninja-forms-field nf-element">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -218,17 +221,48 @@
                                                             <div class="nf-field">
                                                                 <div class="field-wrap submit-wrap textbox-wrap">
                                                                     <div class="nf-field-element">
-                                                                            <input id="nf-field-4" class="ninja-forms-field nf-element " type="button" value="Calc">
+                                                                            <input id="btnCalc" onclick="calcFunction(document.compoundCalculator)" class="ninja-forms-field nf-element " type="button" value="Calc">
 
-                                                                            <input id="nf-field-4" class="ninja-forms-field nf-element " type="button" value="Clear">
+                                                                            <input id="btnClear" onclick="resetFunction(document.compoundCalculator)" class="ninja-forms-field nf-element " type="button" value="Clear">
 
-                                                                            <input id="nf-field-4" class="ninja-forms-field nf-element " type="button" value="Print">
+                                                                            <input id="btnPrint" onclick="window.print();" class="ninja-forms-field nf-element " type="button" value="Print">
 
-                                                                            <input id="nf-field-4" class="ninja-forms-field nf-element " type="button" value="Help">
+                                                                            <input id="btnHelp" class="ninja-forms-field nf-element " type="button" value="Help">
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
+
+                                                        <div class="summary-table">
+                                                            <table width="100%" cellspacing="0" cellpadding="0" border="1">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <th width="40%">Interest Earned:</th>
+                                                                        <td width="60%" id="st_1"></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th>Future Value (FV):</th>
+                                                                        <td id="st_2"></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th>Annual Percentage Yield (APY):</th>
+                                                                        <td id="st_3"></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th>Daily Interest Rate:</th>
+                                                                        <td id="st_4"></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div> 
+
+
+                                                        <div class="report-table">
+                                                            <table width="100%" cellspacing="0" cellpadding="0" border="1">
+                                                                <tbody></tbody>
+                                                            </table>
+                                                        </div> 
+
 
                                                     </div>
                                                 </div>
@@ -243,6 +277,9 @@
         </div>
     </div>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
   <script src="assets/js/scripts.js"></script>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 </body>
 </html>
